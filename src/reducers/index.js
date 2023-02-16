@@ -1,11 +1,12 @@
 import { ADD_ONE, APPLY_NUMBER, CHANGE_OPERATION } from './../actions';
 
 export const initialState = {
-    total: 100,
-    operation: "*",
-    memory: 100
+    total: 0,
+    operation: "+",
+    memory: 0
 }
 
+//using operation slice of state here
 const calculateResult = (num1, num2, operation) => {
     switch(operation) {
         case("+"):
@@ -19,6 +20,7 @@ const calculateResult = (num1, num2, operation) => {
 
 export const reducer = (state, action) => {
     switch(action.type) {
+        //these are action cases
         case(ADD_ONE):
             return({
                 ...state,
@@ -29,6 +31,7 @@ export const reducer = (state, action) => {
             return ({ 
                 ...state, 
                 total: calculateResult(state.total, action.payload, state.operation)
+                //you're passing info to calculateResult function
             });
         
         case(CHANGE_OPERATION):

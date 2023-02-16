@@ -1,29 +1,42 @@
 import React, {useState, useReducer} from 'react';
 
-import { initialState, reducer } from '../reducers';
 import './App.css';
 
 import TotalDisplay from './TotalDisplay';
 import CalcButton from './CalcButton';
 
+import reducer, { initialState } from '../reducers';
+import { addOne, applyNumber, changeOperation } from '../actions';
 
 function App() {
-
   const [state, dispatch] = useReducer(reducer, initialState);
   // console.log(state);
 
-  // addOne action creator - Will probably learn later?
-  // const addOne = () => {
-  //   return {
-  //     type: '../actions/addOne'
-  //   }
+  //event handler 1 - Connect a premade action - addOne - don't need
+  // const handle1Click = () => {
+  //   // console.log("check if click works")
+  //   dispatch(addOne())
   // }
+
+  //event handler 1b - Connect a BETTER premade action
+  const handleNumberClick = (number) => {
+    console.log(number);
+    dispatch(applyNumber(number));
+  }
+
+  //event handler 2 - Create and Connect an action creator -- + - *
+  const handleOperationClick = (operator) => {
+    console.log(operator);
+    dispatch(changeOperation(operator))
+  }
 
 
   return (
     <div className="App">
       <nav className="navbar navbar-dark bg-dark">
-        <a className="navbar-brand" href="#"> Reducer Challenge</a>
+        <a className="navbar-brand" href="#"> 
+          Reducer Challenge
+        </a>
       </nav>
 
       <div className = "container row mt-5">
@@ -53,31 +66,63 @@ function App() {
             <div className="row">
               <CalcButton 
                 value={1}
-                onClick={()=>
-                  dispatch({type: "ADD_ONE"})
-                }
-                // the {} in dispatch is the ACTION OBJECT
+                // onClick={handle1Click}
+                //wrap eventhandler in a function -- so we pass in a function and call EH
+                onClick={() => handleNumberClick(1)}
               />
-              <CalcButton value={2}/>
-              <CalcButton value={3}/>
+              <CalcButton 
+                value={2}
+                onClick={() => handleNumberClick(2)}
+              />
+              <CalcButton 
+                value={3}
+                onClick={() => handleNumberClick(3)}
+              />
             </div>
 
             <div className="row">
-              <CalcButton value={4}/>
-              <CalcButton value={5}/>
-              <CalcButton value={6}/>
+              <CalcButton 
+                value={4}
+                onClick={() => handleNumberClick(4)}             
+              />
+              <CalcButton 
+                value={5}
+                onClick={() => handleNumberClick(5)}              
+              />
+              <CalcButton 
+                value={6}
+                onClick={() => handleNumberClick(6)}             
+              />
             </div>
 
             <div className="row">
-              <CalcButton value={7}/>
-              <CalcButton value={8}/>
-              <CalcButton value={9}/>
+              <CalcButton 
+                value={7}
+                onClick={() => handleNumberClick(7)}              
+              />
+              <CalcButton 
+                value={8}
+                onClick={() => handleNumberClick(8)}              
+              />
+              <CalcButton 
+                value={9}
+                onClick={() => handleNumberClick(9)}              
+              />
             </div>
 
             <div className="row">
-              <CalcButton value={"+"}/>
-              <CalcButton value={"*"}/>
-              <CalcButton value={"-"}/>
+              <CalcButton 
+                value={"+"}
+                onClick={()=> handleOperationClick("+")}
+              />
+              <CalcButton 
+                value={"*"}
+                onClick={()=> handleOperationClick("*")}
+              />
+              <CalcButton 
+                value={"-"}
+                onClick={()=> handleOperationClick("-")}
+              />
             </div>
 
             <div className="row ce_button">
