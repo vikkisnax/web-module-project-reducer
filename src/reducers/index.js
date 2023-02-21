@@ -1,4 +1,13 @@
-import { ADD_ONE, APPLY_NUMBER, CHANGE_OPERATION } from './../actions';
+// these cap words are reducer constants
+import { 
+    ADD_ONE, 
+    APPLY_NUMBER, 
+    CHANGE_OPERATION, 
+    CLEAR_DISPLAY, 
+    CURRENT_MEMORY,
+    APPLY_MEMORY,
+    CLEAR_MEMORY  
+} from './../actions';
 
 export const initialState = {
     total: 0,
@@ -20,7 +29,7 @@ const calculateResult = (num1, num2, operation) => {
 
 export const reducer = (state, action) => {
     switch(action.type) {
-        //these are action cases
+        //these are action cases/ action constants?
         case(ADD_ONE):
             return({
                 ...state,
@@ -39,6 +48,31 @@ export const reducer = (state, action) => {
                 ...state,
                 operation: action.payload
             });
+        
+        case(CLEAR_DISPLAY):
+            return({
+                ...state,
+                total: 0
+            })
+        
+        case(CURRENT_MEMORY):
+            return({
+                ...state,
+                memory: state.total
+            })
+        
+        case(APPLY_MEMORY):
+            return({
+                ...state,
+                //pass in all states to the CR function
+                total: calculateResult(state.total, state.memory, state.operation)
+            })
+
+        case(CLEAR_MEMORY):
+            return({
+                ...state,
+                memory: 0
+            })
             
         default:
             return state;

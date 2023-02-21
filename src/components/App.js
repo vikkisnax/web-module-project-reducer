@@ -6,7 +6,15 @@ import TotalDisplay from './TotalDisplay';
 import CalcButton from './CalcButton';
 
 import reducer, { initialState } from '../reducers';
-import { addOne, applyNumber, changeOperation } from '../actions';
+import { 
+  addOne, 
+  applyNumber, 
+  changeOperation, 
+  clearDisplay,
+  currentMemory, 
+  applyMemory,
+  clearMemory 
+} from '../actions';
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -28,6 +36,30 @@ function App() {
   const handleOperationClick = (operator) => {
     console.log(operator);
     dispatch(changeOperation(operator))
+  }
+
+  //event handler 3 - Create and connect a reducer case and action creator - clear button will dispatch/execute the clearDisplay action creator. clearDisplay() is the object you made in actions file, which is the object in the reducers file. 
+  const clearDisplayClick = () => {
+    console.log("clicked clear");
+    dispatch(clearDisplay())
+  }
+
+  //event handler 4 - currentMemory
+  const currentMemoryClick = () => {
+    console.log("saved in current memory");
+    dispatch(currentMemory())
+  }
+
+  //event handler 5 - applyMemory
+  const applyMemoryClick = () => {
+    console.log("added current memory to total value");
+    dispatch(applyMemory())
+  }
+
+  //event handler 6 - clearMemory
+  const clearMemoryClick = () => {
+    console.log("cleared memory");
+    dispatch(clearMemory())
   }
 
 
@@ -58,9 +90,18 @@ function App() {
             </div>
             
             <div className="row">
-              <CalcButton value={"M+"}/>
-              <CalcButton value={"MR"}/>
-              <CalcButton value={"MC"}/>
+              <CalcButton 
+                value={"M+"}
+                onClick={() => currentMemoryClick()}
+              />
+              <CalcButton 
+                value={"MR"}
+                onClick={() => applyMemoryClick()}
+              />
+              <CalcButton 
+                value={"MC"}
+                onClick={() => clearMemoryClick()}
+              />
             </div>
 
             <div className="row">
@@ -126,7 +167,10 @@ function App() {
             </div>
 
             <div className="row ce_button">
-              <CalcButton value={"CE"}/>
+              <CalcButton 
+                value={"CE"}
+                onClick={() => clearDisplayClick()}
+              />
             </div>
 
           </form>
